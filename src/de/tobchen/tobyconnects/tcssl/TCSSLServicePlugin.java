@@ -44,7 +44,7 @@ public class TCSSLServicePlugin implements ServicePlugin {
     @Override
     public void init(Properties properties) {
         configurationController.saveProperty("TCP", "tcpConfigurationClass",
-                "de.tobchen.tconnect.tcssl.TConnectSSLConfiguration");
+                TCSSLConfiguration.class.getName());
         
         ObjectXMLSerializer serializer = ObjectXMLSerializer.getInstance();
         XStream xstream = serializer.getXStream();

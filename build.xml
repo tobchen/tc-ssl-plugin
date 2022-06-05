@@ -1,0 +1,35 @@
+<project name="Toby Connects SSL Plugin" basedir="." default="main">
+    <property name="build.dir" value="build"/>
+
+    <path id="classpath">
+        <fileset dir="lib" includes="**/*.jar" />
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${build.dir}/classes" />
+        <javac srcdir="src" destdir="${build.dir}/classes" classpathref="classpath" />
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="${build.dir}/tcssl.jar" basedir="${build.dir}/classes" />
+    </target>
+
+    <target name="sign" depends="jar">
+        <signjar jar="${build.dir}/tcssl.jar" alias="${signAlias}" storepass="${signPass}" />
+    </target>
+
+    <target name="package" depends="sign">
+        <mkdir dir="${build.dir}/tcssl" />
+        <copy file="plugin.xml" tofile="${build.dir}/tcssl/plugin.xml" />
+        <copy file="${build.dir}/tcssl.jar" tofile="${build.dir}/tcssl/tcssl.jar" />
+        <zip destfile="${build.dir}/tcssl.zip">
+            <zipfileset dir="${build.dir}/tcssl" prefix="tcssl"/>
+        </zip>
+    </target>
+
+    <target name="main" depends="clean, package" />
+</project>

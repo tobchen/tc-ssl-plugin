@@ -4,7 +4,7 @@ This plugin enables (or rather, *will* enable) SSL in TCP connectors.
 
 ## Dependencies
 
-Copy dependencies from your Mirth Connect installation to */lib/*.
+Copy dependencies from your Mirth Connect installation to */lib/*:
 
 - *mirth-server.jar* from *Mirth Connect/server-lib/*
 - *donkey-server.jar* from *Mirth Connect/server-lib/donkey/*
@@ -13,8 +13,16 @@ Copy dependencies from your Mirth Connect installation to */lib/*.
 - *tcp-shared.jar* from *Mirth Connect/extensions/tcp/*
 - *tcp-server.jar* from *Mirth Connect/extensions/tcp/*
 
+Additionally download to */lib/*:
+
+- *log4j-1.2.16.jar*
+- *commons-lang3-3.9.jar*
+- *miglayout-core-4.2.jar*
+- *miglayout-swing-4.2.jar*
+- *xstream-1.4.12.jar*
+
 ## Compile And Package
 
-From */* execute: `mvn package`. Put *.jar* and *plugin.xml* in a folder *tcssl* and package as *tcssl.zip*.
+In */*, to create `tcssl.zip` execute: `ant -DsignAlias=<alias> -DsignPass=<password>`
 
-The *.jar* will need to be signed. Self-signed archives can be used in Mirth Adminstrator Launcher run with argumens `-d` and/or `-k`.
+The parameters are needed to sign the JAR. Self-signed archives can be used in Mirth Adminstrator Launcher when run with argumens `-d` and/or `-k`.
