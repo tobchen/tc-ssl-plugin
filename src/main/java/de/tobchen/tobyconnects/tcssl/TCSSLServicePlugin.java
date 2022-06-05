@@ -1,4 +1,4 @@
-package de.tobchen.tconnect.tcssl;
+package de.tobchen.tobyconnects.tcssl;
 
 import java.util.Map;
 import java.util.Properties;
@@ -11,7 +11,7 @@ import com.mirth.connect.server.controllers.ConfigurationController;
 import com.mirth.connect.server.controllers.ControllerFactory;
 import com.thoughtworks.xstream.XStream;
 
-public class TConnectSSLServicePlugin implements ServicePlugin {
+public class TCSSLServicePlugin implements ServicePlugin {
 
     private ConfigurationController configurationController = ControllerFactory.getFactory().createConfigurationController();
 
@@ -48,7 +48,7 @@ public class TConnectSSLServicePlugin implements ServicePlugin {
         
         ObjectXMLSerializer serializer = ObjectXMLSerializer.getInstance();
         XStream xstream = serializer.getXStream();
-        xstream.registerLocalConverter(TConnectSSLPluginProperties.class, "connectorPluginProperties", new PluginPropertiesConverter(serializer.getNormalizedVersion(), xstream.getMapper()));
+        xstream.registerLocalConverter(TCSSLPluginProperties.class, "connectorPluginProperties", new PluginPropertiesConverter(serializer.getNormalizedVersion(), xstream.getMapper()));
     }
 
     @Override

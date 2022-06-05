@@ -1,15 +1,15 @@
 <pluginMetaData path="tcssl">
-    <name>Toby Connect SSL Plugin</name>
+    <name>Toby Connects SSL Plugin</name>
     <author>Tobias Heukäufer</author>
     <pluginVersion>0.0.1</pluginVersion>
     <mirthVersion>4.0.1</mirthVersion>
     <url>https://github.com/tobchen</url>
 	<description>This plugin enables SSL in TCP connectors.</description>
 	<serverClasses>
-		<string>de.tobchen.tconnect.tcssl.TConnectSSLServicePlugin</string>
+		<string>de.tobchen.tobyconnects.tcssl.TCSSLServicePlugin</string>
 	</serverClasses>
     <clientClasses>
-        <string>de.tobchen.tconnect.tcssl.TConnectSSLPropertiesPlugin</string>
+        <string>de.tobchen.tobyconnects.tcssl.TCSSLPropertiesPlugin</string>
 	</clientClasses>
 	<library type="SHARED" path="tcssl.jar" />
 </pluginMetaData>

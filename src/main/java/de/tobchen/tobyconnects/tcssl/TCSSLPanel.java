@@ -1,4 +1,4 @@
-package de.tobchen.tconnect.tcssl;
+package de.tobchen.tobyconnects.tcssl;
 
 import java.awt.Component;
 
@@ -15,11 +15,11 @@ import net.miginfocom.swing.MigLayout;
  * Very much inspired by HttpAuthConnectorPropertiesPanel from Mirth Connect
  */
 
-public class TConnectSSLPanel extends AbstractConnectorPropertiesPanel {
+public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
 
     private MirthCheckBox enabledBox;
 
-    public TConnectSSLPanel() {
+    public TCSSLPanel() {
         initComponents();
         initToolTips();
         initLayout();
@@ -27,20 +27,20 @@ public class TConnectSSLPanel extends AbstractConnectorPropertiesPanel {
 
     @Override
     public ConnectorPluginProperties getProperties() {
-        TConnectSSLPluginProperties properties = new TConnectSSLPluginProperties();
+        TCSSLPluginProperties properties = new TCSSLPluginProperties();
         properties.setEnabled(enabledBox.isSelected());
         return properties;
     }
 
     @Override
     public void setProperties(ConnectorProperties connectorProperties, ConnectorPluginProperties properties, Mode mode, String transportName) {
-        TConnectSSLPluginProperties sslProperties = (TConnectSSLPluginProperties) properties;
+        TCSSLPluginProperties sslProperties = (TCSSLPluginProperties) properties;
         enabledBox.setSelected(sslProperties.isEnabled());
     }
 
     @Override
     public ConnectorPluginProperties getDefaults() {
-        return new TConnectSSLPluginProperties();
+        return new TCSSLPluginProperties();
     }
 
     @Override

@@ -1,4 +1,6 @@
-# Toby Connect SSL Plugin
+# Toby Connects SSL Plugin
+
+This plugin enables (or rather, *will* enable) SSL in TCP connectors.
 
 ## Dependencies
 
@@ -14,3 +16,5 @@ Copy dependencies from your Mirth Connect installation to */lib/*.
 ## Compile And Package
 
 From */* execute: `mvn package`. Put *.jar* and *plugin.xml* in a folder *tcssl* and package as *tcssl.zip*.
+
+The *.jar* will need to be signed. Self-signed archives can be used in Mirth Adminstrator Launcher run with argumens `-d` and/or `-k`.

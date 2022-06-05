@@ -1,4 +1,4 @@
-package de.tobchen.tconnect.tcssl;
+package de.tobchen.tobyconnects.tcssl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,17 +11,17 @@ import com.mirth.connect.donkey.model.channel.ConnectorPluginProperties;
  * Very much inspired by HttpAuthConnectorPluginProperties and BasicHttpAuthProperties from Mirth Connect.
  */
 
-public class TConnectSSLPluginProperties extends ConnectorPluginProperties {
+public class TCSSLPluginProperties extends ConnectorPluginProperties {
 
     public static final String PLUGIN_POINT = "Toby Connect SSL Plugin Properties";
 
     private boolean enabled;
 
-    public TConnectSSLPluginProperties() {
+    public TCSSLPluginProperties() {
         enabled = false;
     }
 
-    public TConnectSSLPluginProperties(TConnectSSLPluginProperties tConnectSSLPluginProperties) {
+    public TCSSLPluginProperties(TCSSLPluginProperties tConnectSSLPluginProperties) {
         this.enabled = tConnectSSLPluginProperties.isEnabled();
     }
 
@@ -40,7 +40,7 @@ public class TConnectSSLPluginProperties extends ConnectorPluginProperties {
 
     @Override
     public ConnectorPluginProperties clone() {
-        return new TConnectSSLPluginProperties(this);
+        return new TCSSLPluginProperties(this);
     }
 
     @Override

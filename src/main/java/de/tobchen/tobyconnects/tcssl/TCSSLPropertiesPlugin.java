@@ -1,4 +1,4 @@
-package de.tobchen.tconnect.tcssl;
+package de.tobchen.tobyconnects.tcssl;
 
 import com.mirth.connect.client.ui.AbstractConnectorPropertiesPanel;
 import com.mirth.connect.connectors.tcp.TcpReceiverProperties;
@@ -11,19 +11,19 @@ import com.thoughtworks.xstream.XStream;
  * Very much inspired by HttpAuthConnectorPropertiesPlugin from Mirth Connect.
  */
 
-public class TConnectSSLPropertiesPlugin extends ConnectorPropertiesPlugin {
+public class TCSSLPropertiesPlugin extends ConnectorPropertiesPlugin {
 
-    public TConnectSSLPropertiesPlugin(String pluginName) {
+    public TCSSLPropertiesPlugin(String pluginName) {
         super(pluginName);
 
         ObjectXMLSerializer serializer = ObjectXMLSerializer.getInstance();
         XStream xstream = serializer.getXStream();
-        xstream.registerLocalConverter(TConnectSSLPluginProperties.class, "connectorPluginProperties", new PluginPropertiesConverter(serializer.getNormalizedVersion(), xstream.getMapper()));
+        xstream.registerLocalConverter(TCSSLPluginProperties.class, "connectorPluginProperties", new PluginPropertiesConverter(serializer.getNormalizedVersion(), xstream.getMapper()));
     }
 
     @Override
     public AbstractConnectorPropertiesPanel getConnectorPropertiesPanel() {
-        return new TConnectSSLPanel();
+        return new TCSSLPanel();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TConnectSSLPropertiesPlugin extends ConnectorPropertiesPlugin {
 
     @Override
     public String getPluginPointName() {
-        return TConnectSSLPluginProperties.PLUGIN_POINT;
+        return TCSSLPluginProperties.PLUGIN_POINT;
     }
     
 }

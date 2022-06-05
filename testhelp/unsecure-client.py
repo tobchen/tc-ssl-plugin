@@ -1,8 +1,9 @@
 import socket
+import sys
 
 
 hostname = "localhost"
-port = 6661
+port = 1443 if len(sys.argv) < 2 else int(sys.argv[1])
 message = "Hello!"
 
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
