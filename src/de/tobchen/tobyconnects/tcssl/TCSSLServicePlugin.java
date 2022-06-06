@@ -43,12 +43,12 @@ public class TCSSLServicePlugin implements ServicePlugin {
 
     @Override
     public void init(Properties properties) {
-        configurationController.saveProperty("TCP", "tcpConfigurationClass",
-                TCSSLConfiguration.class.getName());
+        configurationController.saveProperty("TCP", "tcpConfigurationClass", TCSSLConfiguration.class.getName());
         
         ObjectXMLSerializer serializer = ObjectXMLSerializer.getInstance();
         XStream xstream = serializer.getXStream();
-        xstream.registerLocalConverter(TCSSLPluginProperties.class, "connectorPluginProperties", new PluginPropertiesConverter(serializer.getNormalizedVersion(), xstream.getMapper()));
+        xstream.registerLocalConverter(TCSSLPluginProperties.class, "connectorPluginProperties",
+                new PluginPropertiesConverter(serializer.getNormalizedVersion(), xstream.getMapper()));
     }
 
     @Override
