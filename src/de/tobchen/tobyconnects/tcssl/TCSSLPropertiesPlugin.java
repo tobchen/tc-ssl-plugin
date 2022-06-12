@@ -28,7 +28,7 @@ public class TCSSLPropertiesPlugin extends ConnectorPropertiesPlugin {
 
     @Override
     public String getSettingsTitle() {
-        return "Toby Connect SSL Settings";
+        return "Toby Connects SSL Settings";
     }
 
     @Override

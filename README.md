@@ -1,6 +1,6 @@
 # Toby Connects SSL Plugin
 
-This plugin enables (or rather, *will* enable) SSL in TCP connectors.
+This plugin enables (or rather, *will* enable) SSL in Mirth Connect TCP connectors.
 
 ## Dependencies
 
@@ -26,3 +26,12 @@ Additionally download to */lib/*:
 In */*, to create `tcssl.zip` execute: `ant -DsignAlias=<alias> -DsignPass=<password>`
 
 The parameters are needed to sign the JAR. Self-signed archives can be used in Mirth Adminstrator Launcher when run with argumens `-d` and/or `-k`.
+
+## Usage
+
+## To Do
+
+- Store all passwords in `char[]`
+- TCP Receiver
+  - Receive as Client
+- TCP Sender

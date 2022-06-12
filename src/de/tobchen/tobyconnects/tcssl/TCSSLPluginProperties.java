@@ -15,22 +15,62 @@ public class TCSSLPluginProperties extends ConnectorPluginProperties {
 
     public static final String PLUGIN_POINT = "Toby Connect SSL Plugin Properties";
 
-    private boolean enabled;
+    private boolean enabled = false;
 
-    public TCSSLPluginProperties() {
-        enabled = false;
-    }
+    private String keyStorePath = "";
+    private String keyStorePassword = "";
 
-    public TCSSLPluginProperties(TCSSLPluginProperties tConnectSSLPluginProperties) {
-        this.enabled = tConnectSSLPluginProperties.isEnabled();
+    private String connectorAlias = "";
+    private String connectorAliasPassword = "";
+
+    public TCSSLPluginProperties() { }
+
+    public TCSSLPluginProperties(TCSSLPluginProperties pluginProperties) {
+        this.enabled = pluginProperties.isEnabled();
+        this.keyStorePath = pluginProperties.getKeyStorePath();
+        this.keyStorePassword = pluginProperties.getKeyStorePassword();
+        this.connectorAlias = pluginProperties.getConnectorAlias();
+        this.connectorAliasPassword = pluginProperties.getConnectorAliasPassword();
     }
 
     public boolean isEnabled() {
         return enabled;
     }
 
+    public String getKeyStorePath() {
+        return keyStorePath;
+    }
+
+    public String getKeyStorePassword() {
+        return keyStorePassword;
+    }
+
+    public String getConnectorAlias() {
+        return connectorAlias;
+    }
+
+    public String getConnectorAliasPassword() {
+        return connectorAliasPassword;
+    }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public void setKeyStorePath(String keyStorePath) {
+        this.keyStorePath = keyStorePath;
+    }
+
+    public void setKeyStorePassword(String keyStorePassword) {
+        this.keyStorePassword = keyStorePassword;
+    }
+
+    public void setConnectorAlias(String connectorAlias) {
+        this.connectorAlias = connectorAlias;
+    }
+
+    public void setConnectorAliasPassword(String connectorAliasPassword) {
+        this.connectorAliasPassword = connectorAliasPassword;
     }
 
     @Override

@@ -1,17 +1,20 @@
 package de.tobchen.tobyconnects.tcssl;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 
+import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocketFactory;
 
 import com.mirth.connect.connectors.tcp.DefaultTcpConfiguration;
 import com.mirth.connect.connectors.tcp.TcpReceiver;
+import com.mirth.connect.connectors.tcp.TcpReceiverProperties;
 import com.mirth.connect.donkey.model.channel.ConnectorPluginProperties;
 import com.mirth.connect.donkey.server.channel.Connector;
 
@@ -34,9 +37,22 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
                     TCSSLPluginProperties sslProperties = (TCSSLPluginProperties) properties;
                     
                     if (sslProperties.isEnabled()) {
+                        TcpReceiverProperties tcpProperties = (TcpReceiverProperties) connector.getConnectorProperties();
+
                         type = ConfigType.SSL_RECEIVER;
 
-                        SSLContext context = SSLContext.getDefault();
+                        SSLContext context = null;
+                        if (tcpProperties.isServerMode()) {
+                            context = SSLContext.getInstance("TLS");
+                            context.init(new KeyManager[] { new SpecificKeyManager(new File(
+                                    sslProperties.getKeyStorePath()), sslProperties.getKeyStorePassword().toCharArray(),
+                                    sslProperties.getConnectorAlias(), sslProperties.getConnectorAliasPassword().toCharArray(),
+                                    null, null) },
+                                    null, null);
+                        } else {
+                            context = SSLContext.getDefault();
+                        }
+
                         socketFactory = context.getSocketFactory();
                         serverSocketFactory = context.getServerSocketFactory();
                     }
