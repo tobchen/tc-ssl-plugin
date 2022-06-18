@@ -1,6 +1,5 @@
 package de.tobchen.tobyconnects.tcssl;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -44,10 +43,8 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
                         SSLContext context = null;
                         if (tcpProperties.isServerMode()) {
                             context = SSLContext.getInstance("TLS");
-                            context.init(new KeyManager[] { new SpecificKeyManager(new File(
-                                    sslProperties.getKeyStorePath()), sslProperties.getKeyStorePassword().toCharArray(),
-                                    sslProperties.getConnectorAlias(), sslProperties.getConnectorAliasPassword().toCharArray(),
-                                    null, null) },
+                            context.init(new KeyManager[] { new CertAndKeyManager(
+                                    sslProperties.getCertPath(), sslProperties.getKeyPath()) },
                                     null, null);
                         } else {
                             context = SSLContext.getDefault();

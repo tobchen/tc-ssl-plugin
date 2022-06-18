@@ -17,7 +17,7 @@ public class TCSSLServicePlugin implements ServicePlugin {
 
     @Override
     public String getPluginPointName() {
-        return "Toby Connect SSL Service Plugin";
+        return "Toby Connects SSL Service Plugin";
     }
 
     @Override

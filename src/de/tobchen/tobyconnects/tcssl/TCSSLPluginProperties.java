@@ -13,64 +13,43 @@ import com.mirth.connect.donkey.model.channel.ConnectorPluginProperties;
 
 public class TCSSLPluginProperties extends ConnectorPluginProperties {
 
-    public static final String PLUGIN_POINT = "Toby Connect SSL Plugin Properties";
+    public static final String PLUGIN_POINT = "Toby Connects SSL Plugin Properties";
 
     private boolean enabled = false;
 
-    private String keyStorePath = "";
-    private String keyStorePassword = "";
-
-    private String connectorAlias = "";
-    private String connectorAliasPassword = "";
+    private String certPath = "";
+    private String keyPath = "";
 
     public TCSSLPluginProperties() { }
 
     public TCSSLPluginProperties(TCSSLPluginProperties pluginProperties) {
         this.enabled = pluginProperties.isEnabled();
-        this.keyStorePath = pluginProperties.getKeyStorePath();
-        this.keyStorePassword = pluginProperties.getKeyStorePassword();
-        this.connectorAlias = pluginProperties.getConnectorAlias();
-        this.connectorAliasPassword = pluginProperties.getConnectorAliasPassword();
+        this.certPath = pluginProperties.getCertPath();
+        this.keyPath = pluginProperties.getKeyPath();
     }
 
     public boolean isEnabled() {
         return enabled;
     }
 
-    public String getKeyStorePath() {
-        return keyStorePath;
+    public String getCertPath() {
+        return certPath;
     }
 
-    public String getKeyStorePassword() {
-        return keyStorePassword;
-    }
-
-    public String getConnectorAlias() {
-        return connectorAlias;
-    }
-
-    public String getConnectorAliasPassword() {
-        return connectorAliasPassword;
+    public String getKeyPath() {
+        return keyPath;
     }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-    public void setKeyStorePath(String keyStorePath) {
-        this.keyStorePath = keyStorePath;
+    public void setCertPath(String certPath) {
+        this.certPath = certPath;
     }
 
-    public void setKeyStorePassword(String keyStorePassword) {
-        this.keyStorePassword = keyStorePassword;
-    }
-
-    public void setConnectorAlias(String connectorAlias) {
-        this.connectorAlias = connectorAlias;
-    }
-
-    public void setConnectorAliasPassword(String connectorAliasPassword) {
-        this.connectorAliasPassword = connectorAliasPassword;
+    public void setKeyPath(String keyPath) {
+        this.keyPath = keyPath;
     }
 
     @Override

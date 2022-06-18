@@ -1,15 +1,14 @@
 package de.tobchen.tobyconnects.tcssl;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JLabel;
 
 import com.mirth.connect.client.ui.AbstractConnectorPropertiesPanel;
 import com.mirth.connect.client.ui.UIConstants;
 import com.mirth.connect.client.ui.components.MirthCheckBox;
-import com.mirth.connect.client.ui.components.MirthPasswordField;
 import com.mirth.connect.client.ui.components.MirthTextField;
 import com.mirth.connect.donkey.model.channel.ConnectorPluginProperties;
 import com.mirth.connect.donkey.model.channel.ConnectorProperties;
@@ -25,15 +24,11 @@ public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
 
     private MirthCheckBox enabledBox;
 
-    private JLabel keyStorePathLabel;
-    private MirthTextField keyStorePathField;
-    private JLabel keyStorePasswordLabel;
-    private MirthPasswordField keyStorePasswordField;
+    private JLabel certPathLabel;
+    private MirthTextField certPathField;
 
-    private JLabel connectorAliasLabel;
-    private MirthTextField connectorAliasField;
-    private JLabel connectorAliasPasswordLabel;
-    private MirthPasswordField connectorAliasPasswordField;
+    private JLabel keyPathLabel;
+    private MirthTextField keyPathField;
 
     public TCSSLPanel() {
         initComponents();
@@ -47,11 +42,8 @@ public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
 
         properties.setEnabled(enabledBox.isSelected());
 
-        properties.setKeyStorePath(keyStorePathField.getText());
-        properties.setKeyStorePassword(new String(keyStorePasswordField.getPassword()));
-
-        properties.setConnectorAlias(connectorAliasField.getText());
-        properties.setConnectorAliasPassword(new String(connectorAliasPasswordField.getPassword()));
+        properties.setCertPath(certPathField.getText());
+        properties.setKeyPath(keyPathField.getText());
         
         return properties;
     }
@@ -62,11 +54,8 @@ public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
         
         enabledBox.setSelected(sslProperties.isEnabled());
 
-        keyStorePathField.setText(sslProperties.getKeyStorePath());
-        keyStorePasswordField.setText(sslProperties.getKeyStorePassword());
-
-        connectorAliasField.setText(sslProperties.getConnectorAlias());
-        connectorAliasPasswordField.setText(sslProperties.getConnectorAliasPassword());
+        certPathField.setText(sslProperties.getCertPath());
+        keyPathField.setText(sslProperties.getKeyPath());
 
         updateActivations();
     }
@@ -79,15 +68,11 @@ public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
     @Override
     public boolean checkProperties(ConnectorProperties connectorProperties, ConnectorPluginProperties properties,
             Mode mode, String transportName, boolean highlight) {
-        // TODO Actually do check properties
-        // TODO Check if key store exists
         return true;
     }
 
     @Override
-    public void resetInvalidProperties() {
-        // TODO Reset after actually checked
-    }
+    public void resetInvalidProperties() { }
 
     @Override
     public Component[][] getLayoutComponents() {
@@ -102,28 +87,20 @@ public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
 
         enabledBox = new MirthCheckBox("Enabled");
         enabledBox.setBackground(getBackground());
-        enabledBox.addActionListener(new ActionListener() {
+        enabledBox.addItemListener(new ItemListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void itemStateChanged(ItemEvent e) {
                 updateActivations();
             }
         });
 
-        keyStorePathLabel = new JLabel("Key Store Path:");
-        keyStorePathField = new MirthTextField();
-        keyStorePathField.setBackground(getBackground());
+        certPathLabel = new JLabel("Certificate Path:");
+        certPathField = new MirthTextField();
+        certPathField.setBackground(getBackground());
 
-        keyStorePasswordLabel = new JLabel("Key Store Password:");
-        keyStorePasswordField = new MirthPasswordField();
-        keyStorePasswordField.setBackground(getBackground());
-
-        connectorAliasLabel = new JLabel("Connector Alias:");
-        connectorAliasField = new MirthTextField();
-        connectorAliasField.setBackground(getBackground());
-
-        connectorAliasPasswordLabel = new JLabel("Connector Alias Password:");
-        connectorAliasPasswordField = new MirthPasswordField();
-        connectorAliasPasswordField.setBackground(getBackground());     
+        keyPathLabel = new JLabel("Key Path:");
+        keyPathField = new MirthTextField();
+        keyPathField.setBackground(getBackground());  
     }
 
     private void initToolTips() {
@@ -133,24 +110,16 @@ public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
     private void initLayout() {
         setLayout(new MigLayout());
         add(enabledBox, "span");
-        add(keyStorePathLabel, "newline, right");
-        add(keyStorePathField, "w 400");
-        add(keyStorePasswordLabel, "newline, right");
-        add(keyStorePasswordField, "w 200");
-        add(connectorAliasLabel, "newline, right");
-        add(connectorAliasField, "w 150");
-        add(connectorAliasPasswordLabel, "newline, right");
-        add(connectorAliasPasswordField, "w 200");
+        add(certPathLabel, "newline, right");
+        add(certPathField, "w 400");
+        add(keyPathLabel, "newline, right");
+        add(keyPathField, "w 400");
     }
 
     private void updateActivations() {
-        keyStorePathLabel.setEnabled(enabledBox.isEnabled());
-        keyStorePathField.setEnabled(enabledBox.isEnabled());
-        keyStorePasswordLabel.setEnabled(enabledBox.isEnabled());
-        keyStorePasswordField.setEnabled(enabledBox.isEnabled());
-        connectorAliasLabel.setEnabled(enabledBox.isEnabled());
-        connectorAliasField.setEnabled(enabledBox.isEnabled());
-        connectorAliasPasswordLabel.setEnabled(enabledBox.isEnabled());
-        connectorAliasPasswordField.setEnabled(enabledBox.isEnabled());
+        certPathLabel.setEnabled(enabledBox.isEnabled());
+        certPathField.setEnabled(enabledBox.isEnabled());
+        keyPathLabel.setEnabled(enabledBox.isEnabled());
+        keyPathField.setEnabled(enabledBox.isEnabled());
     }
 }
