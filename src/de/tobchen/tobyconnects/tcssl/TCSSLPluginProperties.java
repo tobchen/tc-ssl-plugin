@@ -1,7 +1,9 @@
 package de.tobchen.tobyconnects.tcssl;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
@@ -20,12 +22,16 @@ public class TCSSLPluginProperties extends ConnectorPluginProperties {
     private String certPath = "";
     private String keyPath = "";
 
+    private boolean trustAllCerts = false;
+    private Set<String> trustedCertPaths = new HashSet<>();
+
     public TCSSLPluginProperties() { }
 
     public TCSSLPluginProperties(TCSSLPluginProperties pluginProperties) {
         this.enabled = pluginProperties.isEnabled();
         this.certPath = pluginProperties.getCertPath();
         this.keyPath = pluginProperties.getKeyPath();
+        
     }
 
     public boolean isEnabled() {
@@ -40,6 +46,14 @@ public class TCSSLPluginProperties extends ConnectorPluginProperties {
         return keyPath;
     }
 
+    public boolean doTrustAllCerts() {
+        return trustAllCerts;
+    }
+
+    public Set<String> getTrustedCertPaths() {
+        return Set.copyOf(trustedCertPaths);
+    }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -50,6 +64,14 @@ public class TCSSLPluginProperties extends ConnectorPluginProperties {
 
     public void setKeyPath(String keyPath) {
         this.keyPath = keyPath;
+    }
+
+    public void setTrustAllCerts(boolean trustAllCerts) {
+        this.trustAllCerts = trustAllCerts;
+    }
+
+    public void setTrustedCertPaths(Set<String> trustedCertPaths) {
+        this.trustedCertPaths = Set.copyOf(trustedCertPaths);
     }
 
     @Override

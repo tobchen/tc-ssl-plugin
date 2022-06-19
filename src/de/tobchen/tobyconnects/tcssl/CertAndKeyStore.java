@@ -21,6 +21,7 @@ import java.util.zip.Checksum;
 // TODO Use bouncy castle
 
 public class CertAndKeyStore {
+    // TODO Have CERTIFIATES be of entries of list of certifactes, so multiple certs per file can be cached
     private final static Map<String, Entry<X509Certificate>> CERTIFICATES = new HashMap<>();
     private final static Map<String, Entry<PrivateKey>> PRIVATE_KEYS = new HashMap<>();
 

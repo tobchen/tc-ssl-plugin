@@ -14,9 +14,17 @@ In Mirth Connect Administrator, install *tcssl.zip*.
 
 X509 certificates and PKCS8 private key (decrypted) shall be stored in PEM files accessible to the Mirth Connect service user. They are read once on channel deployment. Currently, only a single certificate per file is supported.
 
-Currently, only the TCP listener in server mode is supported.
+Currently, only the TCP listener in server mode is supported. Respond on New Connection (in any case) is not supported.
 
-![Mirth Connect TCP Listener with SSL enabled](doc/tcplistener.svg)
+![Mirth Connect TCP Listener with SSL enabled](doc/settings.png)
+
+| Item | Name | Description |
+|---|---|---|
+|A|Enabled|Enable or disable SSL support.|
+|B|Certificate Path|Path to X509 certificate PEM file.|
+|C|Key Path|Path to PKCS8 private key PEM file.|
+|D|Trust All Certificates|Whether to trust *all* certificates from connected sockets. In server mode, unchecking this option calls for client authentication.| 
+|E|Trusted Certificate Paths|Paths to PEM files of trusted X509 certificates. An empty list and not trusting *all* certificates allows for *no* connection.|
 
 ## Development
 
@@ -52,20 +60,22 @@ The parameters are needed to sign the JAR. Self-signed archives can be used in M
 ### To Do
 
 - TCP Listener
-  - Server Mode
-    - Client Certificate Trust
   - Client Mode
+  - Respond on New Connection
 - TCP Sender
   - Client Mode
   - Server Mode
 - General
-  - Disable Mirth Connect Administrator Fields on SSL Disabled
   - Mirth Connect Administrator Command to Clear "Certificate & Key Store"
   - Allow PKCS8 Encrypted Private Key
   - [Allow Other Private Keys](https://github.com/openssl/openssl/blob/master/include/openssl/pem.h#L35)
 
 ### Version History
 
-#### v0.1
+#### v0.2.0
+
+- TCP listener in server mode may require client authentication.
+
+#### v0.1.0
 
 - TCP listener in server mode works
