@@ -54,9 +54,7 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
                             if (certPath.isEmpty()) {
                                 certPath = null;
                             }
-                            if (keyPath.isEmpty()) {
-                                keyPath = null;
-                            }
+                            keyPath = null;
                         }
                         KeyManager keyManager = new CertAndKeyManager(certPath, keyPath);
 
