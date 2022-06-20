@@ -1,6 +1,7 @@
 package de.tobchen.tobyconnects.tcssl;
 
 import com.mirth.connect.client.ui.AbstractConnectorPropertiesPanel;
+import com.mirth.connect.connectors.tcp.TcpDispatcherProperties;
 import com.mirth.connect.connectors.tcp.TcpReceiverProperties;
 import com.mirth.connect.model.converters.ObjectXMLSerializer;
 import com.mirth.connect.model.converters.PluginPropertiesConverter;
@@ -38,7 +39,7 @@ public class TCSSLPropertiesPlugin extends ConnectorPropertiesPlugin {
 
     @Override
     public boolean isSupported(String transportName) {
-        return TcpReceiverProperties.NAME.equals(transportName);
+        return TcpReceiverProperties.NAME.equals(transportName) || TcpDispatcherProperties.NAME.equals(transportName);
     }
 
     @Override

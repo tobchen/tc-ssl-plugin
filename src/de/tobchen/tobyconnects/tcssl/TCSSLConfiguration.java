@@ -14,9 +14,12 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 import com.mirth.connect.connectors.tcp.DefaultTcpConfiguration;
+import com.mirth.connect.connectors.tcp.TcpDispatcher;
+import com.mirth.connect.connectors.tcp.TcpDispatcherProperties;
 import com.mirth.connect.connectors.tcp.TcpReceiver;
 import com.mirth.connect.connectors.tcp.TcpReceiverProperties;
 import com.mirth.connect.donkey.model.channel.ConnectorPluginProperties;
+import com.mirth.connect.donkey.model.channel.ConnectorProperties;
 import com.mirth.connect.donkey.server.channel.Connector;
 
 public class TCSSLConfiguration extends DefaultTcpConfiguration {
@@ -33,15 +36,29 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
 
         type = ConfigType.DEFAULT;
 
-        if (connector instanceof TcpReceiver) {
+        if (connector instanceof TcpReceiver || connector instanceof TcpDispatcher) {
             for (ConnectorPluginProperties properties : connector.getConnectorProperties().getPluginProperties()) {
                 if (properties instanceof TCSSLPluginProperties) {
                     TCSSLPluginProperties sslProperties = (TCSSLPluginProperties) properties;
                     
                     if (sslProperties.isEnabled()) {
-                        TcpReceiverProperties tcpProperties = (TcpReceiverProperties) connector.getConnectorProperties();
+                        type = ConfigType.SSL;
 
-                        type = ConfigType.SSL_RECEIVER;
+                        String certPath = sslProperties.getCertPath();
+                        String keyPath = sslProperties.getKeyPath();
+                        ConnectorProperties connectorProperties = connector.getConnectorProperties();
+                        if ((connectorProperties instanceof TcpReceiverProperties
+                                && !((TcpReceiverProperties) connectorProperties).isServerMode())
+                                || (connectorProperties instanceof TcpDispatcherProperties
+                                && !((TcpDispatcherProperties) connectorProperties).isServerMode())) {
+                            if (certPath.isEmpty()) {
+                                certPath = null;
+                            }
+                            if (keyPath.isEmpty()) {
+                                keyPath = null;
+                            }
+                        }
+                        KeyManager keyManager = new CertAndKeyManager(certPath, keyPath);
 
                         trustAllCerts = sslProperties.doTrustAllCerts();
                         TrustManager trustManager = TrustAllManager.INSTANCE;
@@ -49,18 +66,11 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
                             trustManager = new TrustSomeManager(sslProperties.getTrustedCertPaths().toArray(new String[0]));
                         }
 
-                        KeyManager keyManager = new CertAndKeyManager(
-                                sslProperties.getCertPath(), sslProperties.getKeyPath());
-
-                        SSLContext context = null;
-                        if (tcpProperties.isServerMode()) {
-                            context = SSLContext.getInstance("TLS");
-                            context.init(new KeyManager[] { keyManager },
-                                    new TrustManager[] { trustManager }, null);
-                        } else {
-                            context = SSLContext.getDefault();
-                        }
-
+                        SSLContext context = SSLContext.getInstance("TLS");
+                        context.init(new KeyManager[] { keyManager },
+                                new TrustManager[] { trustManager },
+                                null);
+                        
                         socketFactory = context.getSocketFactory();
                         serverSocketFactory = context.getServerSocketFactory();
                     }
@@ -74,7 +84,7 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
     @Override
     public ServerSocket createServerSocket(int port, int backlog) throws IOException {
         switch (type) {
-        case SSL_RECEIVER:
+        case SSL:
             SSLServerSocket socket = (SSLServerSocket) serverSocketFactory.createServerSocket(port, backlog);
             socket.setNeedClientAuth(!trustAllCerts);
             return socket;
@@ -86,7 +96,7 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
     @Override
     public ServerSocket createServerSocket(int port, int backlog, InetAddress bindAddr) throws IOException {
         switch (type) {
-        case SSL_RECEIVER:
+        case SSL:
             SSLServerSocket socket = (SSLServerSocket) serverSocketFactory.createServerSocket(port, backlog, bindAddr);
             socket.setNeedClientAuth(!trustAllCerts);
             return socket;
@@ -98,7 +108,7 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
     @Override
     public Socket createSocket() {
         switch (type) {
-        case SSL_RECEIVER:
+        case SSL:
             try {
                 return socketFactory.createSocket();
             } catch (IOException e) {
@@ -119,13 +129,13 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
         // TODO Return useful socket information
 
         Map<String, Object> result = super.getSocketInformation(socket);
-        result.put("tcsslSSL", type == ConfigType.SSL_RECEIVER);
+        result.put("tcsslSSL", type == ConfigType.SSL);
 
         return result;
     }
 
     private enum ConfigType {
         DEFAULT,
-        SSL_RECEIVER
+        SSL
     }
 }

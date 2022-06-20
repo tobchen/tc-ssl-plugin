@@ -19,19 +19,19 @@ public class CertAndKeyManager implements X509KeyManager {
 
     public CertAndKeyManager(String certPath, String keyPath)
             throws CertificateException, IOException, InvalidKeySpecException, NoSuchAlgorithmException {
-        CERT = CertAndKeyStore.readCertificate(certPath);
+        CERT = certPath != null ? CertAndKeyStore.readCertificate(certPath) : null;
         KEY = keyPath != null ? CertAndKeyStore.readKey(keyPath) : null;
     }
 
     @Override
     public String[] getClientAliases(String keyType, Principal[] issuers) {
-        return CERT.getPublicKey().getAlgorithm().equals(keyType) ? new String[] { ALIAS } : null;
+        return CERT != null && CERT.getPublicKey().getAlgorithm().equals(keyType) ? new String[] { ALIAS } : null;
     }
 
     @Override
     public String chooseClientAlias(String[] keyType, Principal[] issuers, Socket socket) {
         for (String type : keyType) {
-            if (CERT.getPublicKey().getAlgorithm().equals(type)) {
+            if (CERT != null && CERT.getPublicKey().getAlgorithm().equals(type)) {
                 return ALIAS;
             }
         }
@@ -40,22 +40,22 @@ public class CertAndKeyManager implements X509KeyManager {
 
     @Override
     public String[] getServerAliases(String keyType, Principal[] issuers) {
-        return CERT.getPublicKey().getAlgorithm().equals(keyType) ? new String[] { ALIAS } : null;
+        return CERT != null && CERT.getPublicKey().getAlgorithm().equals(keyType) ? new String[] { ALIAS } : null;
     }
 
     @Override
     public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
-        return CERT.getPublicKey().getAlgorithm().equals(keyType) ? ALIAS : null;
+        return CERT != null && CERT.getPublicKey().getAlgorithm().equals(keyType) ? ALIAS : null;
     }
 
     @Override
     public X509Certificate[] getCertificateChain(String alias) {
-        return ALIAS.equals(alias) ? new X509Certificate[] { CERT } : null;
+        return CERT != null && ALIAS.equals(alias) ? new X509Certificate[] { CERT } : null;
     }
 
     @Override
     public PrivateKey getPrivateKey(String alias) {
-        return ALIAS.equals(alias) ? KEY : null;
+        return KEY != null && ALIAS.equals(alias) ? KEY : null;
     }
     
 }
