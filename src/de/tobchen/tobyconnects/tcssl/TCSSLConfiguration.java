@@ -15,11 +15,8 @@ import javax.net.ssl.TrustManager;
 
 import com.mirth.connect.connectors.tcp.DefaultTcpConfiguration;
 import com.mirth.connect.connectors.tcp.TcpDispatcher;
-import com.mirth.connect.connectors.tcp.TcpDispatcherProperties;
 import com.mirth.connect.connectors.tcp.TcpReceiver;
-import com.mirth.connect.connectors.tcp.TcpReceiverProperties;
 import com.mirth.connect.donkey.model.channel.ConnectorPluginProperties;
-import com.mirth.connect.donkey.model.channel.ConnectorProperties;
 import com.mirth.connect.donkey.server.channel.Connector;
 
 public class TCSSLConfiguration extends DefaultTcpConfiguration {
@@ -46,14 +43,10 @@ public class TCSSLConfiguration extends DefaultTcpConfiguration {
 
                         String certPath = sslProperties.getCertPath();
                         String keyPath = sslProperties.getKeyPath();
-                        ConnectorProperties connectorProperties = connector.getConnectorProperties();
-                        if ((connectorProperties instanceof TcpReceiverProperties
-                                && !((TcpReceiverProperties) connectorProperties).isServerMode())
-                                || (connectorProperties instanceof TcpDispatcherProperties
-                                && !((TcpDispatcherProperties) connectorProperties).isServerMode())) {
-                            if (certPath.isEmpty()) {
-                                certPath = null;
-                            }
+                        if (certPath.isEmpty()) {
+                            certPath = null;
+                        }
+                        if (keyPath.isEmpty()) {
                             keyPath = null;
                         }
                         KeyManager keyManager = new CertAndKeyManager(certPath, keyPath);

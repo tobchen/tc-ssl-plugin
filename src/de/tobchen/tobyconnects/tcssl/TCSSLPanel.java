@@ -164,7 +164,7 @@ public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
     private void initToolTips() {
         enabledBox.setToolTipText("Enable or disable SSL.");
         certPathField.setToolTipText("Path to connector X509 certificate PEM file. Required for server mode, optional for client mode.");
-        keyPathField.setToolTipText("Path to connector PKCS8 private key PEM file. Only in server mode.");
+        keyPathField.setToolTipText("Path to connector PKCS8 private key PEM file. Required for certificates.");
         trustedCertPathsList.setToolTipText("Paths to trusted X509 certificate PEM files.");
         newButton.setToolTipText("Add new path to trusted certificate list.");
         deleteButton.setToolTipText("Remove selected path from trusted certificate list.");

@@ -21,8 +21,8 @@ Currently, Respond on New Connection (in any case) is not supported. Client mode
 | Item | Name | Description |
 |---|---|---|
 |A|Enabled|Enable or disable SSL support.|
-|B|Certificate Path|Path to X509 certificate PEM file.|
-|C|Key Path|Path to PKCS8 private key PEM file. Not used in client mode.|
+|B|Certificate Path|Path to X509 certificate PEM file. Required in server mode and for authorization in client mode.|
+|C|Key Path|Path to PKCS8 private key PEM file. Required for certificate use.|
 |D|Trust All Certificates|Whether to trust *all* certificates from connected sockets. In server mode, unchecking this option calls for client authentication.| 
 |E|Trusted Certificate Paths|Paths to PEM files of trusted X509 certificates. An empty list *and* not trusting *all* certificates allow for *no* connection.|
 
@@ -64,8 +64,6 @@ Before releasing a new version of this plugin the following tests must have been
 */testhelp/* has client/server certificates/keys and Python programs to help testing.
 
 #### TCP Listener (Server Mode)
-
-No procedure defined yet.
 
 |Step|Client SSL|Client Cert|Listener SSL|Listener Cert|Listener Trust|Expected|
 |---|---|---|---|---|---|---|
