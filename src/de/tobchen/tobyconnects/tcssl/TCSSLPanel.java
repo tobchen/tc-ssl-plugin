@@ -1,3 +1,11 @@
+/*
+ * Copyright 2022 Tobias Heukäufer
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 package de.tobchen.tobyconnects.tcssl;
 
 import java.awt.Component;
@@ -29,7 +37,7 @@ import com.mirth.connect.model.Connector.Mode;
 import net.miginfocom.swing.MigLayout;
 
 /*
- * Very much inspired by HttpAuthConnectorPropertiesPanel from Mirth Connect
+ * Very much inspired by HttpAuthConnectorPropertiesPanel from Mirth Connect by NextGen.
  */
 
 public class TCSSLPanel extends AbstractConnectorPropertiesPanel {
